@@ -14,7 +14,8 @@ def predict(transaction):
     values = pd.DataFrame([transaction])
     print(values)
 
-    rob_scaler = RobustScaler()
+    with open('./scaler/scaler.pkl', 'rb') as scaler_file:
+        rob_scaler = pickle.load(scaler_file)
 
     values['scaled_amount'] = rob_scaler.fit_transform(values['Amount'].values.reshape(-1,1))
     values['scaled_time'] = rob_scaler.fit_transform(values['Time'].values.reshape(-1,1))
